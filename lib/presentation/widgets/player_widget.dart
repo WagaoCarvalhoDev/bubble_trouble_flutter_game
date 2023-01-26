@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class PlayerWidget extends StatelessWidget {
   const PlayerWidget({
-    Key? key, required this.playerX,
+    Key? key,
+    required this.playerX,
   }) : super(key: key);
 
   final double playerX;
@@ -14,7 +15,7 @@ class PlayerWidget extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: Container(
-          color: Colors.blue,
+          color: Colors.purple,
           height: 50,
           width: 50,
         ),
