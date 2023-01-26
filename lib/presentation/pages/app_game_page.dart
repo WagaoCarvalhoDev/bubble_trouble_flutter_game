@@ -1,25 +1,25 @@
+import 'package:bubble_trouble_flutter_game/presentation/controller/player_move_controller.dart';
 import 'package:bubble_trouble_flutter_game/presentation/widgets/button_game_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../widgets/player_widget.dart';
 
-class AppGamePage extends StatefulWidget {
-  const AppGamePage({super.key, required this.title});
-
-  final String title;
+class AppGamePage extends ConsumerStatefulWidget {
+  const AppGamePage({super.key});
 
   @override
-  State<AppGamePage> createState() => _AppGamePageState();
+  AppGamePageState createState() => AppGamePageState();
 }
 
-class _AppGamePageState extends State<AppGamePage> {
+class AppGamePageState extends ConsumerState<AppGamePage> {
   @override
   Widget build(BuildContext context) {
-    final playerX = 20;
+    final playerX = ref.watch(playerXProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text('widget.title'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -29,8 +29,8 @@ class _AppGamePageState extends State<AppGamePage> {
             child: Container(
               color: Colors.pink[100],
               child: Center(
-                child: Stack(children: const [
-                  PlayerWidget(playerX: 0.5),
+                child: Stack(children: [
+                  PlayerWidget(playerX: playerX),
                 ]),
               ),
             ),
@@ -40,11 +40,17 @@ class _AppGamePageState extends State<AppGamePage> {
               color: Colors.grey,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
+                children: [
                   ButtonGameWidget(icon: Icon(Icons.play_arrow)),
-                  ButtonGameWidget(icon: Icon(Icons.arrow_back)),
+                  ButtonGameWidget(
+                    icon: Icon(Icons.arrow_back),
+                    onTap: () => ref.read(playerXProvider.notifier).moveLeft(),
+                  ),
                   ButtonGameWidget(icon: Icon(Icons.arrow_upward)),
-                  ButtonGameWidget(icon: Icon(Icons.arrow_forward)),
+                  ButtonGameWidget(
+                    icon: Icon(Icons.arrow_forward),
+                    onTap: () => ref.read(playerXProvider.notifier).moveRight(),
+                  ),
                 ],
               ),
             ),
