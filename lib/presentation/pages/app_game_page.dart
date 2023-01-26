@@ -24,6 +24,21 @@ class _AppGamePageState extends State<AppGamePage> {
             flex: 3,
             child: Container(
               color: Colors.pink[100],
+              child: Center(
+                child: Stack(children: [
+                  Container(
+                    alignment: const Alignment(0, 1),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Container(
+                        color: Colors.blue,
+                        height: 50,
+                        width: 50,
+                      ),
+                    ),
+                  )
+                ]),
+              ),
             ),
           ),
           Expanded(
