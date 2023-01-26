@@ -1,5 +1,7 @@
-import 'package:bubble_trouble_flutter_game/presentation/widgets/burron_game_widget.dart';
+import 'package:bubble_trouble_flutter_game/presentation/widgets/button_game_widget.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/player_widget.dart';
 
 class AppGamePage extends StatefulWidget {
   const AppGamePage({super.key, required this.title});
@@ -13,6 +15,8 @@ class AppGamePage extends StatefulWidget {
 class _AppGamePageState extends State<AppGamePage> {
   @override
   Widget build(BuildContext context) {
+    final playerX = 20;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -25,18 +29,8 @@ class _AppGamePageState extends State<AppGamePage> {
             child: Container(
               color: Colors.pink[100],
               child: Center(
-                child: Stack(children: [
-                  Container(
-                    alignment: const Alignment(0, 1),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Container(
-                        color: Colors.blue,
-                        height: 50,
-                        width: 50,
-                      ),
-                    ),
-                  )
+                child: Stack(children: const [
+                  PlayerWidget(playerX: 0.5),
                 ]),
               ),
             ),
