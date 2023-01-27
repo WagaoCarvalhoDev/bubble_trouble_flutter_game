@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../controller/missile_fire_x_controller.dart';
+import '../controller/missile_fire_y_controller.dart';
 import '../widgets/player_widget.dart';
 
 class AppGamePage extends ConsumerStatefulWidget {
@@ -16,9 +18,13 @@ class AppGamePage extends ConsumerStatefulWidget {
 class AppGamePageState extends ConsumerState<AppGamePage> {
   @override
   Widget build(BuildContext context) {
-    var playerX = ref.watch(playerXProvider);
+    final playerX = ref.watch(playerXProvider);
+    final missileX = ref.watch(missileFireXProvider);
+    double missileY = 1;
+    double missileHeight = ref.watch(missileFireYProvider);
 
     PlayerMoveController.listenPlayerLimits(ref);
+    //MissileFireYController.missileHeightRef(ref);
 
     return Scaffold(
       appBar: AppBar(
@@ -46,6 +52,14 @@ class AppGamePageState extends ConsumerState<AppGamePage> {
                 color: Colors.pink[100],
                 child: Center(
                   child: Stack(children: [
+                    Container(
+                      alignment: Alignment(missileX, missileY),
+                      child: Container(
+                        height: missileHeight,
+                        width: 30,
+                        color: Colors.red,
+                      ),
+                    ),
                     PlayerWidget(playerX: playerX),
                   ]),
                 ),
@@ -63,7 +77,11 @@ class AppGamePageState extends ConsumerState<AppGamePage> {
                         onTap: () {
                           ref.read(playerXProvider.notifier).moveLeft();
                         }),
-                    const ButtonGameWidget(icon: Icon(Icons.arrow_upward)),
+                    ButtonGameWidget(
+                        icon: Icon(Icons.arrow_upward),
+                        onTap: () {
+                          ref.read(missileFireYProvider.notifier).missileFire();
+                        }),
                     ButtonGameWidget(
                       icon: const Icon(Icons.arrow_forward),
                       onTap: () =>
@@ -78,6 +96,4 @@ class AppGamePageState extends ConsumerState<AppGamePage> {
       ),
     );
   }
-
-
 }
