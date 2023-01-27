@@ -10,4 +10,8 @@ class PlayerMoveController extends StateNotifier<double> {
   moveLeft() => state -= 0.1;
 
   moveRight() => state += 0.1;
+
+  moveStopLeft() => state = -1;
+
+  moveStopRight() => state = 1;
 }

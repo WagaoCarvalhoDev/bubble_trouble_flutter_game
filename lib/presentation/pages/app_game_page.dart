@@ -16,7 +16,15 @@ class AppGamePage extends ConsumerStatefulWidget {
 class AppGamePageState extends ConsumerState<AppGamePage> {
   @override
   Widget build(BuildContext context) {
-    final playerX = ref.watch(playerXProvider);
+    var playerX = ref.watch(playerXProvider);
+
+    ref.listen(playerXProvider, (previous, next) {
+      if (next < -1) {
+        ref.read(playerXProvider.notifier).moveStopLeft();
+      } else if (next > 1) {
+        ref.read(playerXProvider.notifier).moveStopRight();
+      }
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -30,6 +38,9 @@ class AppGamePageState extends ConsumerState<AppGamePage> {
             ref.read(playerXProvider.notifier).moveLeft();
           } else if (value.isKeyPressed(LogicalKeyboardKey.arrowRight)) {
             ref.read(playerXProvider.notifier).moveRight();
+          }
+          if (value.isKeyPressed(LogicalKeyboardKey.space)) {
+            //ref.read(playerXProvider.notifier).fireMissile();
           }
         },
         child: Column(
@@ -52,15 +63,15 @@ class AppGamePageState extends ConsumerState<AppGamePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ButtonGameWidget(icon: Icon(Icons.play_arrow)),
+                    const ButtonGameWidget(icon: Icon(Icons.play_arrow)),
                     ButtonGameWidget(
-                      icon: Icon(Icons.arrow_back),
-                      onTap: () =>
-                          ref.read(playerXProvider.notifier).moveLeft(),
-                    ),
-                    ButtonGameWidget(icon: Icon(Icons.arrow_upward)),
+                        icon: const Icon(Icons.arrow_back),
+                        onTap: () {
+                          ref.read(playerXProvider.notifier).moveLeft();
+                        }),
+                    const ButtonGameWidget(icon: Icon(Icons.arrow_upward)),
                     ButtonGameWidget(
-                      icon: Icon(Icons.arrow_forward),
+                      icon: const Icon(Icons.arrow_forward),
                       onTap: () =>
                           ref.read(playerXProvider.notifier).moveRight(),
                     ),
