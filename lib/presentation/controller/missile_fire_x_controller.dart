@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'player_move_controller.dart';
+
 final missileFireXProvider =
     StateNotifierProvider<MissileFireXController, double>(
   (ref) => MissileFireXController(),
@@ -8,17 +10,11 @@ final missileFireXProvider =
 class MissileFireXController extends StateNotifier<double> {
   MissileFireXController() : super(0);
 
-/*missileFireX() => Timer.periodic(const Duration(milliseconds: 100), (timer) {
-        state -= 0.1;
-      });*/
+  missileFireX(pos) => state = pos;
 
-/* static listenPlayerLimits(ref) {
+  static missileFireXPosition(ref, pos) {
     ref.listen(playerXProvider, (previous, next) {
-      if (next < -1) {
-        ref.read(playerXProvider.notifier).moveStopLeft();
-      } else if (next > 1) {
-        ref.read(playerXProvider.notifier).moveStopRight();
-      }
+      ref.read(missileFireXProvider.notifier).missileFireX(pos);
     });
-  }*/
+  }
 }

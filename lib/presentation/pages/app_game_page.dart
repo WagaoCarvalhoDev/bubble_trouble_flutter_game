@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../controller/missile_fire_x_controller.dart';
 import '../controller/missile_fire_y_controller.dart';
 import '../widgets/player_widget.dart';
 
@@ -19,12 +18,12 @@ class AppGamePageState extends ConsumerState<AppGamePage> {
   @override
   Widget build(BuildContext context) {
     final playerX = ref.watch(playerXProvider);
-    final missileX = ref.watch(missileFireXProvider);
+    final missileX = playerX;
     double missileY = 1;
     double missileHeight = ref.watch(missileFireYProvider);
 
     PlayerMoveController.listenPlayerLimits(ref);
-    //MissileFireYController.missileHeightRef(ref);
+    //MissileFireXController.missileFireXPosition(ref, missileX);
 
     return Scaffold(
       appBar: AppBar(
@@ -56,7 +55,7 @@ class AppGamePageState extends ConsumerState<AppGamePage> {
                       alignment: Alignment(missileX, missileY),
                       child: Container(
                         height: missileHeight,
-                        width: 30,
+                        width: 5,
                         color: Colors.red,
                       ),
                     ),
@@ -80,7 +79,9 @@ class AppGamePageState extends ConsumerState<AppGamePage> {
                     ButtonGameWidget(
                         icon: Icon(Icons.arrow_upward),
                         onTap: () {
-                          ref.read(missileFireYProvider.notifier).missileFire();
+                          ref
+                              .read(missileFireYProvider.notifier)
+                              .missileFire(context);
                         }),
                     ButtonGameWidget(
                       icon: const Icon(Icons.arrow_forward),

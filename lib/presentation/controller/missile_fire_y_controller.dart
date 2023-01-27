@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final missileFireYProvider =
@@ -10,7 +11,12 @@ final missileFireYProvider =
 class MissileFireYController extends StateNotifier<double> {
   MissileFireYController() : super(10);
 
-  missileFire() => Timer.periodic(const Duration(milliseconds: 1), (timer) {
-        state += 10;
+  missileFire(context) =>
+      Timer.periodic(const Duration(milliseconds: 1), (timer) {
+        if (state > MediaQuery.of(context).size.height * 3 / 4) {
+          timer.cancel();
+        } else {
+          state += 10;
+        }
       });
 }
