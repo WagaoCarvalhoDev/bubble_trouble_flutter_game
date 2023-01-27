@@ -18,13 +18,7 @@ class AppGamePageState extends ConsumerState<AppGamePage> {
   Widget build(BuildContext context) {
     var playerX = ref.watch(playerXProvider);
 
-    ref.listen(playerXProvider, (previous, next) {
-      if (next < -1) {
-        ref.read(playerXProvider.notifier).moveStopLeft();
-      } else if (next > 1) {
-        ref.read(playerXProvider.notifier).moveStopRight();
-      }
-    });
+    PlayerMoveController.listenPlayerLimits(ref);
 
     return Scaffold(
       appBar: AppBar(
@@ -84,4 +78,6 @@ class AppGamePageState extends ConsumerState<AppGamePage> {
       ),
     );
   }
+
+
 }

@@ -14,4 +14,14 @@ class PlayerMoveController extends StateNotifier<double> {
   moveStopLeft() => state = -1;
 
   moveStopRight() => state = 1;
+
+  static listenPlayerLimits(ref) {
+    ref.listen(playerXProvider, (previous, next) {
+      if (next < -1) {
+        ref.read(playerXProvider.notifier).moveStopLeft();
+      } else if (next > 1) {
+        ref.read(playerXProvider.notifier).moveStopRight();
+      }
+    });
+  }
 }
